@@ -14,6 +14,19 @@ pub fn read_file_to_vec(path: &str) -> Vec<usize> {
     entries
 }
 
+pub fn read_file_to_vec_of_string(path: &str) -> Vec<String> {
+    let mut entries = vec!();
+    if let Ok(lines) = read_lines(path) {
+        for line in lines {
+            if let Ok(ip) = line {
+                entries.push(ip);
+            }
+        }
+    }
+    entries
+}
+
+
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
     where P: AsRef<Path>, {
     let file = File::open(filename)?;
