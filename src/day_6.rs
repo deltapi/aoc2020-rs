@@ -1,6 +1,4 @@
-use itertools::iproduct;
-
-fn day_6_1(input: Vec<String>) -> usize {
+fn _day_6_1(input: Vec<String>) -> usize {
     input.iter()
         .map(|x| x.replace(" ", ""))
         .map(|x| x.chars().collect::<Vec<char>>())
@@ -12,8 +10,7 @@ fn day_6_1(input: Vec<String>) -> usize {
         .sum()
 }
 
-fn day_6_2(input: Vec<Vec<String>>) -> usize {
-    println!("{:?}", input);
+fn _day_6_2(input: Vec<Vec<String>>) -> usize {
     input.iter()
         .map(|x| {
             let size = x.len();
@@ -32,18 +29,18 @@ fn day_6_2(input: Vec<Vec<String>>) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use crate::tooling::*;
-    use crate::day_6::{day_6_1, day_6_2};
+    use crate::tooling::reader::*;
+    use crate::day_6::{_day_6_1, _day_6_2};
 
     #[test]
     fn solve_day_6_1() {
         let entries = read_block_file_to_vec_of_string("resources/day_6");
-        println!("{}", day_6_1(entries));
+        println!("{}", _day_6_1(entries));
     }
 
     #[test]
     fn solve_day_6_2() {
         let entries = read_block_file_to_vec_vec_of_string("resources/day_6");
-        println!("{}", day_6_2(entries));
+        println!("{}", _day_6_2(entries));
     }
 }

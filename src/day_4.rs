@@ -1,41 +1,31 @@
-use itertools::iproduct;
+use crate::tooling::vector::split_each_at;
 
-fn day_4_1(input: Vec<String>) -> usize {
+fn _day_4_1(input: Vec<String>) -> usize {
     let mut valid: usize = 0;
     for line in input {
         let re = regex::Regex::new(r" |\\n").unwrap();
-        let split = re.split(&line);
-        let splitt: Vec<Vec<String>> = split
-            .map(|x| x.to_string()
-                .split(":")
-                .map(|y| y.to_string())
-                .collect::<Vec<String>>().clone())
-            .collect();
-        //println!("{:?}", splitt);
-        if (splitt.iter().any(|i| i[0] == "byr")
+        let split = re.split(&line).collect();
+        let splitt: Vec<Vec<String>> = split_each_at(split, ":");
+        if splitt.iter().any(|i| i[0] == "byr")
             && splitt.iter().any(|i| i[0].trim() == "iyr")
             && splitt.iter().any(|i| i[0].trim() == "eyr")
             && splitt.iter().any(|i| i[0].trim() == "hgt")
             && splitt.iter().any(|i| i[0].trim() == "hcl")
             && splitt.iter().any(|i| i[0].trim() == "ecl")
-            && splitt.iter().any(|i| i[0].trim() == "pid")) {
+            && splitt.iter().any(|i| i[0].trim() == "pid") {
             valid += 1;
         }
     }
     valid
 }
 
-fn day_4_2(input: Vec<String>) -> usize {
+
+fn _day_4_2(input: Vec<String>) -> usize {
     let mut valid: usize = 0;
     for line in input {
         let re = regex::Regex::new(r" |\\n").unwrap();
-        let split = re.split(&line);
-        let splitt: Vec<Vec<String>> = split
-            .map(|x| x.to_string()
-                .split(":")
-                .map(|y| y.to_string())
-                .collect::<Vec<String>>().clone())
-            .collect();
+        let split = re.split(&line).collect();
+        let splitt: Vec<Vec<String>> = split_each_at(split, ":");
         //println!("{:?}", splitt);
         if splitt.iter().find(|i| i[0] == "byr")
             .map_or(false, |x|
@@ -96,28 +86,24 @@ fn day_4_2(input: Vec<String>) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use crate::tooling::*;
-    use crate::day_4::{day_4_1, day_4_2};
+    use crate::tooling::reader::*;
+    use crate::day_4::{_day_4_1, _day_4_2};
 
     #[test]
     fn solve_day_4_1() {
         let entries = read_block_file_to_vec_of_string("resources/day_4");
-
-
-        println!("Result: {}", day_4_1(entries));
+        println!("Result: {}", _day_4_1(entries));
     }
 
     #[test]
     fn solve_day_4_2() {
         let entries = read_block_file_to_vec_of_string("resources/day_4");
-
-
-        println!("Result: {}", day_4_2(entries));
+        println!("Result: {}", _day_4_2(entries));
     }
 
     #[test]
     fn regex() {
         let reg = regex::Regex::new(r"^\d{2,3}(in|cm)$").unwrap();
-        assert!(reg.is_match("222ci"));
+        assert!(reg.is_match("222cm"));
     }
 }

@@ -1,12 +1,10 @@
-use itertools::iproduct;
-
-fn day_2_1(input: Vec<String>) -> usize {
+fn _day_2_1(input: Vec<String>) -> usize {
     let mut valid: usize = 0;
 
     for case in input {
         let split: Vec<&str> = case.split(" ").collect::<Vec<&str>>();
-        let range_low = split[0].split("-").collect::<Vec<&str>>()[0].parse::<usize>().unwrap();
-        let range_high = split[0].split("-").collect::<Vec<&str>>()[1].parse::<usize>().unwrap();
+        let index_low = split[0].split("-").collect::<Vec<&str>>()[0].parse::<usize>().unwrap();
+        let index_high = split[0].split("-").collect::<Vec<&str>>()[1].parse::<usize>().unwrap();
         let mut letter = split[1].to_string();
         letter.pop();
         let pwd = split[2];
@@ -15,15 +13,15 @@ fn day_2_1(input: Vec<String>) -> usize {
             .filter(|a| letter == a.to_string())
             .count();
 
-        if count <= range_high && count >= range_low {
+        // TODO make the conditional a function pointer
+        if count <= index_high && count >= index_low {
             valid += 1;
         }
     }
-
     valid
 }
 
-fn day_2_2(input: Vec<String>) -> usize {
+fn _day_2_2(input: Vec<String>) -> usize {
     let mut valid: usize = 0;
 
     for case in input {
@@ -39,28 +37,27 @@ fn day_2_2(input: Vec<String>) -> usize {
             valid += 1;
         }
     }
-
     valid
 }
 
-
 #[cfg(test)]
 mod tests {
-    use crate::tooling::*;
-    use crate::day_2::{day_2_1, day_2_2};
+    use crate::tooling::reader::*;
+    use crate::day_2::{_day_2_1, _day_2_2};
 
     #[test]
     fn solve_day_2_1() {
         let entries = read_file_to_vec_of_string("resources/day_2");
-
-        println!("Result: {}", day_2_1(entries));
+        let result = _day_2_1(entries);
+        println!("Result: {}", result);
+        assert_eq!(result, 418)
     }
 
     #[test]
     fn solve_day_2_2() {
         let entries = read_file_to_vec_of_string("resources/day_2");
-
-
-        println!("Result: {}", day_2_2(entries));
+        let result = _day_2_2(entries);
+        println!("Result: {}", result);
+        assert_eq!(result, 616)
     }
 }
