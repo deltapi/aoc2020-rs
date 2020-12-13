@@ -14,6 +14,7 @@ fn _day_2_1(input: Vec<String>) -> usize {
             .count();
 
         // TODO make the conditional a function pointer
+        // in order to refactor and extract lines 5-21
         if count <= index_high && count >= index_low {
             valid += 1;
         }
